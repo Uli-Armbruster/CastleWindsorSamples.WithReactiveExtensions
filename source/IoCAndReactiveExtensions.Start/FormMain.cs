@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -20,28 +21,47 @@ namespace IoCAndReactiveExtensions.Start
         public FormMain(IMessageBroker messageBroker) : this()
         {
             _messageBroker = messageBroker;
-            ListenToDaemons();
         }
 
-        private void ListenToDaemons()
+        private void FormMain_Shown(object sender, EventArgs e)
         {
-           _subscription = _messageBroker
-                .Register<DaemonMessage>(
-                                         HandleMessage,
-                                          new SynchronizationContextScheduler(SynchronizationContext.Current)
-                                        );
+            _subscription = new CompositeDisposable
+            {
+                _messageBroker.Register<DaemonEvent>(HandleDaemonEvent,
+                                                     new SynchronizationContextScheduler(SynchronizationContext.Current)),
 
-            
-        }
+                _messageBroker.Register<SystemEvent>(HandleSystemEvent,
+                                                     new SynchronizationContextScheduler(SynchronizationContext.Current))
+            };
 
-       private void HandleMessage(DaemonMessage message)
-        {
-            textBox1.Text += $"{message.Message}{Environment.NewLine}";
+            _messageBroker.Send(new SystemEvent { Message = $"{Name} subscribed to all events" });
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             _subscription?.Dispose();
+        }
+
+        private void HandleDaemonEvent(DaemonEvent @event)
+        {
+            listBox1.Items.Add(@event.Message);
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+        }
+
+        private void HandleSystemEvent(SystemEvent @event)
+        {
+            listBox2.Items.Add(@event.Message);
+            listBox2.SelectedIndex = listBox2.Items.Count - 1;
+        }
+
+        private void ControlOpenWindow1_Click(object sender, EventArgs e)
+        {
+            _messageBroker.Send(new OpenDaemon1Listener());
+        }
+
+        private void ControlOpenWindow2_Click(object sender, EventArgs e)
+        {
+            _messageBroker.Send(new OpenDaemon2Listener());
         }
     }
 }

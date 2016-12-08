@@ -6,14 +6,16 @@ using Castle.Core;
 
 using IoCAndReactiveExtensions.Start.Contracts;
 
-using Minimod.RxMessageBroker;
-
 namespace IoCAndReactiveExtensions.Start.Daemons
 {
+    /// <summary>
+    /// Dummy daemon that produces a message every 7 seconds
+    /// </summary>
     internal class Daemon2 : IStartable
     {
         private readonly IMessageBroker _messageBroker;
         private IDisposable _subscription;
+        private int _seconds;
 
         public Daemon2(IMessageBroker messageBroker)
         {
@@ -22,17 +24,18 @@ namespace IoCAndReactiveExtensions.Start.Daemons
 
         public void Start()
         {
-            var observable = Observable.Interval(TimeSpan.FromSeconds(5), NewThreadScheduler.Default);
+            var observable = Observable.Interval(TimeSpan.FromSeconds(7), NewThreadScheduler.Default);
 
-            _subscription = observable.Do(SendTimeInformation).Subscribe();
+            _subscription = observable.Do(_ => SendTimeInformation()).Subscribe();
         }
 
-        private void SendTimeInformation(long seconds)
+        private void SendTimeInformation()
         {
-            _messageBroker.Send(new DaemonMessage
-                                                {
-                                                    Message = $"Daemon2 says: {seconds} seconds over"
-                                                });
+            _seconds += 7;
+            _messageBroker.Send(new DaemonEvent
+                                {
+                                    Message = $"Daemon2 says: {_seconds} seconds over"
+                                });
         }
 
         public void Stop()

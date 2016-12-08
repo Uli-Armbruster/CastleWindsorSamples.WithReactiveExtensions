@@ -19,20 +19,20 @@ namespace Minimod.RxMessageBroker
     /// </remarks>
     internal class RxMessageBrokerMinimod : IMessageBroker
     {
-        private static RxMessageBrokerMinimod _defaultInstance;
+        private static RxMessageBrokerMinimod DefaultInstance;
         private readonly Subject<object> _stream = new Subject<object>();
 
         public static RxMessageBrokerMinimod Default
-            => _defaultInstance ?? (_defaultInstance = new RxMessageBrokerMinimod());
+            => DefaultInstance ?? (DefaultInstance = new RxMessageBrokerMinimod());
 
         public static void OverrideDefault(RxMessageBrokerMinimod newMessenger)
         {
-            _defaultInstance = newMessenger;
+            DefaultInstance = newMessenger;
         }
 
         public static void Reset()
         {
-            _defaultInstance = null;
+            DefaultInstance = null;
         }
 
         public IObservable<object> Stream => _stream;

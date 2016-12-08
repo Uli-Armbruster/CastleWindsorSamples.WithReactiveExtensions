@@ -1,6 +1,6 @@
 ﻿namespace IoCAndReactiveExtensions.Start.Contracts
 {
-    internal class DaemonMessage
+    internal class DaemonEvent
     {
         public string Message { get; set; }
     }

@@ -14,7 +14,7 @@ namespace IoCAndReactiveExtensions.Start
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using (var container = new Bootstrapper().Execute())
+            using (var container = Bootstrapper.Execute())
             {
                 using (var mainForm = container.Resolve<FormMain>())
                 {

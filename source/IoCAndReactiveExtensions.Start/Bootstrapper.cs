@@ -4,7 +4,7 @@ namespace IoCAndReactiveExtensions.Start
 {
     internal class Bootstrapper
     {
-        public IWindsorContainer Execute()
+        public static IWindsorContainer Execute()
         {
             var container = new WindsorContainer();
             container.Install(new Installer());

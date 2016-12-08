@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 using Castle.Core;
 using Castle.Facilities.Startable;
@@ -13,13 +14,16 @@ using Minimod.RxMessageBroker;
 
 namespace IoCAndReactiveExtensions.Start
 {
-    public class Installer : IWindsorInstaller
+    internal class Installer : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             AddStartableFacility(container);
 
             container.Register(Registrations().ToArray());
+
+            //hack: register container itself
+            container.Register(Component.For<IWindsorContainer>().Instance(container));
         }
 
         private static void AddStartableFacility(IWindsorContainer container)
@@ -47,7 +51,13 @@ namespace IoCAndReactiveExtensions.Start
                 .For<IMessageBroker>()
                 .Instance(RxMessageBrokerMinimod.Default);
 
-            yield return Component.For<FormMain>();
+            yield return Classes
+                .FromThisAssembly()
+                .IncludeNonPublicTypes()
+                .BasedOn<Form>()
+                .WithServiceBase()
+                .WithServiceSelf()
+                .LifestyleTransient();
         }
     }
 }

@@ -53,7 +53,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Contracts\DaemonMessage.cs" />
+    <Compile Include="Contracts\DaemonEvent.cs" />
+    <Compile Include="Contracts\IOpenWindow.cs" />
+    <Compile Include="Contracts\OpenDaemon1Listener.cs" />
+    <Compile Include="Contracts\OpenDaemon2Listener.cs" />
+    <Compile Include="Contracts\SystemEvent.cs" />
+    <Compile Include="Daemon1Listener.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Daemon1Listener.Designer.cs">
+      <DependentUpon>Daemon1Listener.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Daemon2Listener.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Daemon2Listener.Designer.cs">
+      <DependentUpon>Daemon2Listener.cs</DependentUpon>
+    </Compile>
     <Compile Include="Installer.cs" />
     <Compile Include="Daemons\Daemon1.cs" />
     <Compile Include="Daemons\Daemon2.cs" />
@@ -67,6 +83,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowOpener.cs" />
+    <EmbeddedResource Include="Daemon1Listener.resx">
+      <DependentUpon>Daemon1Listener.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Daemon2Listener.resx">
+      <DependentUpon>Daemon2Listener.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
