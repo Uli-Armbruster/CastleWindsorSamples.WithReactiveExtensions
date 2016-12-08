@@ -47,6 +47,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "FormMain";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

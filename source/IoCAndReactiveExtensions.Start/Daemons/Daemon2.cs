@@ -24,7 +24,7 @@ namespace IoCAndReactiveExtensions.Start.Daemons
         {
             var observable = Observable.Interval(TimeSpan.FromSeconds(5), NewThreadScheduler.Default);
 
-            _subscription = observable.Subscribe(SendTimeInformation);
+            _subscription = observable.Do(SendTimeInformation).Subscribe();
         }
 
         private void SendTimeInformation(long seconds)

@@ -10,6 +10,7 @@ namespace IoCAndReactiveExtensions.Start
     public partial class FormMain : Form
     {
         private readonly IMessageBroker _messageBroker;
+        private IDisposable _subscription;
 
         public FormMain()
         {
@@ -24,16 +25,23 @@ namespace IoCAndReactiveExtensions.Start
 
         private void ListenToDaemons()
         {
-            _messageBroker
+           _subscription = _messageBroker
                 .Register<DaemonMessage>(
                                          HandleMessage,
-                                         new SynchronizationContextScheduler(SynchronizationContext.Current)
+                                          new SynchronizationContextScheduler(SynchronizationContext.Current)
                                         );
+
+            
         }
 
-        private void HandleMessage(DaemonMessage message)
+       private void HandleMessage(DaemonMessage message)
         {
             textBox1.Text += $"{message.Message}{Environment.NewLine}";
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _subscription?.Dispose();
         }
     }
 }
