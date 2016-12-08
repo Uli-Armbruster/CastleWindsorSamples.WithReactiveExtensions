@@ -1,0 +1,18 @@
+FRAMEWORK: >= NET462
+NUGET
+  remote: http://api.nuget.org/v3/index.json
+    Castle.Core (3.3)
+    Castle.Windsor (3.3)
+      Castle.Core (>= 3.3)
+    System.Reactive (3.1.1)
+      System.Reactive.PlatformServices (>= 3.1.1)
+      System.Reactive.Windows.Threading (>= 3.1.1)
+    System.Reactive.Core (3.1.1)
+      System.Reactive.Interfaces (>= 3.1.1)
+    System.Reactive.Interfaces (3.1.1)
+    System.Reactive.Linq (3.1.1)
+      System.Reactive.Core (>= 3.1.1)
+    System.Reactive.PlatformServices (3.1.1)
+      System.Reactive.Linq (>= 3.1.1)
+    System.Reactive.Windows.Threading (3.1.1)
+      System.Reactive.Core (>= 3.1.1)

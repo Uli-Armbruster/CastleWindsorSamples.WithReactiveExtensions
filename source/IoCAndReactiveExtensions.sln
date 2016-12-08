@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{ACC14008-8785-45F4-A4CB-A3CA7C98AA94}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoCAndReactiveExtensions.Start", "IoCAndReactiveExtensions.Start\IoCAndReactiveExtensions.Start.csproj", "{3CA5CC12-D52F-49C1-A238-8E8629C9E404}"
 EndProject
 Global
